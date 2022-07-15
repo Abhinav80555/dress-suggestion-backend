@@ -1,45 +1,38 @@
 import express from "express";
-import {client} from "../index.js";
+import {
+  getAllDress,
+  getDressById,
+  createDress,
+  deleteDressById,
+  updateDressById,
+} from "./helper.js";
 
-const router=express.Router();
+const router = express.Router();
 
-router.get('/',async function (req, res) {
-    //db.dress.findOne({})
-    const result= await client.db("dress").collection("dress").find({}).toArray();
-      res.send(result)
-    });
-  
-  router.get('/:id',async function (req, res) {
-      const {id}= req.params;
-      //db.dress.findOne({id:id})
-      const result =await client.db("dress").collection("dress").findOne({id:id})
-      result? res.send(result):res.status(404).send({error : 'not found'});
-    });
-  
-    router.post('/',async function (req, res) {
-      const data = req.body;
-      //db.dress.insertMany(data)
-  const result = await client.db("dress").collection("dress").insertMany(data);
-  res.send(result);
-    });
-  
-  
-  
-    router.delete('/:id',async function (req, res) {
-      const {id}= req.params;
-      //db.dress.deleteOne({id:id})
-      const result =await client.db("dress").collection("dress").deleteOne({id:id})
-      result.deletedCount>0 ? res.send(result):res.status(404).send({error : 'not found'});
-    });
-  
-  
-  
-    router.put('/:id',async function (req, res) {
-      const data = req.body;
-      const {id}= req.params;
-      //db.dress.updatetOne({id:id},{$set:data})
-  const result = await client.db("dress").collection("dress").updateOne({id:id},{$set:data});
-  res.send(result);
-    });
+router.get("/", async function (req, res) {
+  await getAllDress(res);
+});
 
-    export const dressRouter=router;
+router.get("/:id", async function (req, res) {
+  const { id } = req.params;
+  await getDressById(id, res);
+});
+
+router.post("/", async function (req, res) {
+  const data = req.body;
+  await createDress(data, res);
+});
+
+router.delete("/:id", async function (req, res) {
+  const { id } = req.params;
+
+  await deleteDressById(id, res);
+});
+
+router.put("/:id", async function (req, res) {
+  const data = req.body;
+  const { id } = req.params;
+  await updateDressById(id, data, res);
+});
+
+export const dressRouter = router;
