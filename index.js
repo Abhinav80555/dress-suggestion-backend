@@ -47,4 +47,21 @@ res.send(result);
 
 
 
+  app.delete('/dress/:id',async function (req, res) {
+    const {id}= req.params;
+    //db.dress.deleteOne({id:id})
+    const result =await client.db("dress").collection("dress").deleteOne({id:id})
+    result.deletedCount>0 ? res.send(result):res.status(404).send({error : 'not found'});
+  });
+
+
+
+  app.put('/dress/:id',async function (req, res) {
+    const data = req.body;
+    const {id}= req.params;
+    //db.dress.updatetOne({id:id},{$set:data})
+const result = await client.db("dress").collection("dress").updateOne({id:id},{$set:data});
+res.send(result);
+  });
+
 app.listen(PORT,()=>console.log(`App listening on ${PORT}`));
