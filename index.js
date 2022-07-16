@@ -2,7 +2,9 @@ import express from "express";
 import { MongoClient } from "mongodb";
 const app = express();
 import dotenv from "dotenv";
+
 import { dressRouter } from "./routes/dress.js";
+import { usersRouter } from "./routes/users.js";
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -25,5 +27,8 @@ app.get("/", function (req, res) {
 });
 
 app.use("/dress", dressRouter);
+app.use("/users", usersRouter);
 
 app.listen(PORT, () => console.log(`App listening on ${PORT}`));
+
+
