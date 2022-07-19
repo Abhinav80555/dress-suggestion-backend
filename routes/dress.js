@@ -1,4 +1,5 @@
 import express from "express";
+import { auth } from "../middleware/auth.js";
 import {
   getAllDress,
   getDressById,
@@ -9,7 +10,7 @@ import {
 
 const router = express.Router();
 
-router.get("/", async function (req, res) {
+router.get("/",async function (req, res) {
   await getAllDress(res);
 });
 
