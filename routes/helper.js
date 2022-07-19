@@ -20,6 +20,21 @@ export async function createDress(data, res) {
   const result = await client.db("dress").collection("dress").insertMany(data);
   res.send(result);
 }
+
+//signup User
+export async function createUser(data, res) {
+  const result = await client.db("dress").collection("users").insertOne(data);
+  res.send(result);
+}
+
+export async function getUserByName(username, res) {
+  const result = await client
+    .db("dress")
+    .collection("users")
+    .findOne({ username: username });
+  return result;
+}
+
 export async function getDressById(id, res) {
   const result = await client
     .db("dress")
