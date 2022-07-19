@@ -1,17 +1,17 @@
 import { client } from "../index.js";
-
+import {ObjectId} from "mongodb"
 export async function updateDressById(id, data, res) {
   const result = await client
     .db("dress")
     .collection("dress")
-    .updateOne({ id: id }, { $set: data });
+    .updateOne({ _id:ObjectId(id) }, { $set: data });
   res.send(result);
 }
 export async function deleteDressById(id, res) {
   const result = await client
     .db("dress")
     .collection("dress")
-    .deleteOne({ id: id });
+    .deleteOne({ _id:ObjectId(id)});
   result.deletedCount > 0
     ? res.send(result)
     : res.status(404).send({ error: "not found" });
@@ -39,7 +39,7 @@ export async function getDressById(id, res) {
   const result = await client
     .db("dress")
     .collection("dress")
-    .findOne({ id: id });
+    .findOne({ _id:ObjectId(id) });
   result ? res.send(result) : res.status(404).send({ error: "not found" });
 }
 export async function getAllDress(res) {
