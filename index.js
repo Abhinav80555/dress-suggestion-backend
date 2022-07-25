@@ -1,5 +1,6 @@
 import express from "express";
 import { MongoClient } from "mongodb";
+import {mongoose} from "mongoose";
 import cors from "cors";
 const app = express();
 import dotenv from "dotenv";
@@ -11,8 +12,14 @@ dotenv.config();
 const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended:true}));
 
 const MONGO_URL = process.env.MONGO_URL;
+
+
+mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{
+  console.log("DB connected");
+}).catch(error=>console.log(error));
 
 async function createConnection() {
   const client = new MongoClient(MONGO_URL);
@@ -28,8 +35,7 @@ app.get("/", function (req, res) {
 });
 
 app.use("/dress", dressRouter);
-app.use("/users", usersRouter);
-
+app.use(usersRouter);
 app.listen(PORT, () => console.log(`App listening on ${PORT}`));
 
 
