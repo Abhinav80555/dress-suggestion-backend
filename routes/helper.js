@@ -34,7 +34,7 @@ export async function deleteDressById(id, res) {
     : res.status(404).send({ error: "not found" });
 }
 export async function createDress(data, res) {
-  const result = await client.db("dress").collection("dress").insertMany(data);
+  const result = await client.db("dress").collection("dress").insertOne(data);
   res.send(result);
 }
 

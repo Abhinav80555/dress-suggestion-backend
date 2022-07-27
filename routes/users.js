@@ -7,7 +7,7 @@ router.post('/users',async(req,res)=>{
   try {
       const user = await User.create(req.body);
       await user.generateToken();
-      res.send(user)
+      res.status(200).send()
   }catch(err) {
        console.error(err);
       res.status(500).send()
